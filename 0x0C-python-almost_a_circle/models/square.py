@@ -1,75 +1,75 @@
 #!/usr/bin/python3
+"""Square class
 """
-Square Module
-"""
+
+
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """Sqare Class
-    """
+    """Define class Square
 
+    Args:
+        Rectangle (Base): class Rectangle
+    """
     def __init__(self, size, x=0, y=0, id=None):
-        """initialize method
-        args:
-            size: square size
-            x: x position
-            y: y position
-            id: object id
+        """Initialisation
         """
         super().__init__(size, size, x, y, id)
 
     def __str__(self):
-        """print method
-        return:
-            formatted list
+        """String representation of a Square
+
+        Returns:
+            str: [Square] (<id>) <x>/<y> - <size>
         """
-        return ("[{}] ({}) {}/{} - {}".format(self.__class__.__name__,
-                                              self.id, self.x,
-                                              self.y, self.width))
+        return ("[Square] ({}) {}/{} - {}".format(self.id,
+                self.x, self.y, self.width))
 
     @property
     def size(self):
-        """width getter method
-        return:
-            size of width and height
+        """size getter
+
+        Returns:
+            int: private instance attribute x of rectangle
         """
         return self.width
 
     @size.setter
-    def size(self, value):
-        """width and height setter method
-        args:
-            value: size value
-        return:
-            na
+    def size(self, size):
+        """Set the value in private instance attribute
+
+        Args:
+            size (int): size of square
+
+        Raises:
+            TypeError: width must be an integer
+            ValueError: width must be > 0
         """
-        self.width = value
-        self.height = value
+        if type(size) is not int:
+            raise TypeError("width must be an integer")
+        if size <= 0:
+            raise ValueError("width must be > 0")
+        self.width = size
+        self.height = size
 
     def update(self, *args, **kwargs):
-        """update square method
-        args:
-            args: pointer to arguments
-            kwargs: double pointer to key word arguments
-        return:
-            na
+        """Update the value of the Square with arbitrary
+        arguments or keyword arguments
         """
-
-        if args:
-            i = 0
-            listme = ['id', 'size', 'x', 'y']
-            for arg in args:
-                setattr(self, listme[i], arg)
-                i += 1
-            return
+        attr = ['id', 'size', 'x', 'y']
+        if args and args[0] is not None:
+            for idx in range(len(args)):
+                setattr(self, attr[idx], args[idx])
         else:
-            for key, value in kwargs.items():
-                setattr(self, key, value)
+            for k, v in kwargs.items():
+                setattr(self, k, v)
 
     def to_dictionary(self):
-        """returns a dictionary of Square
-        return:
-            dictionary
+        """dictionary representation of a Square
+
+        Returns:
+            dict: attribute dictionary of Square
         """
-        return {'id': self.id, 'x': self.x, 'size': self.size, 'y': self.y}
+        new_dict = {'id': self.id, 'x': self.x, 'size': self.size, 'y': self.y}
+        return new_dict
